@@ -295,6 +295,37 @@ The identity issuer and webhook certificates rotate automatically with no manual
 
 **Trust anchor rotation requires manual steps.** Rotating the root CA involves restarting the control plane and all data plane proxies in a coordinated sequence. See the [Linkerd trust anchor rotation guide](https://linkerd.io/2-edge/tasks/automatically-rotating-control-plane-tls-credentials/#9-rotating-the-trust-anchor) for the full procedure.
 
+## Upgrade from 2.15 to 2.19
+
+### Upgrade from 2.15.2 to 2.16.5
+**Release notes:** https://docs.buoyant.io/release-notes/buoyant-enterprise-linkerd/enterprise-2.16.0/
+Change the version of both the **linkerd-crds** and **linkerd-control-plane** `HelmRelease` configuration in the overlays/ folder from **2.15.2** to **2.16.5**. Restart meshed workloads (using either the DataPlane operator or manually) so they are injected with the new proxy.
+
+### Upgrade from 2.16.5 to 2.17.7
+**Release notes:** https://docs.buoyant.io/release-notes/buoyant-enterprise-linkerd/enterprise-2.17.0/
+Change the version of both the **linkerd-crds** and **linkerd-control-plane** `HelmRelease` configuration in the overlay folder from **2.16.5** to **2.17.7**, and update the **linkerd-control-plane** `HelmRelease` values as follows:
+Before:
+```
+license: xxx 
+linkerd-control-plane:
+  foo: bar 
+```
+After:
+```
+license: xxx 
+foo: bar 
+```
+Then restart meshed workloads (using either the DataPlane operator or manually) so they are injected with the new proxy.
+
+### Upgrade from 2.17.7 to 2.18.7
+**Release notes:**  https://docs.buoyant.io/release-notes/buoyant-enterprise-linkerd/enterprise-2.18.0/
+Change the version of both the **linkerd-crds** and **linkerd-control-plane** `HelmRelease` configuration in the overlay folder from **2.17.7** to **2.18.7**. Restart meshed workloads (using either the DataPlane operator or manually) so they are injected with the new proxy.
+
+### Upgrade from 2.18.7 to 2.19.4
+**Release notes:**  https://docs.buoyant.io/release-notes/buoyant-enterprise-linkerd/enterprise-2.19.0/
+Change the version of both the **linkerd-crds** and **linkerd-control-plane** `HelmRelease` configuration in the overlay folder from **2.18.7** to **2.19.4**. Restart meshed workloads (using either the DataPlane operator or manually) so they are injected with the new proxy.
+**Important:** Starting with 2.19.x, Linkerd no longer manages Gateway API CRDs. You must install these CRDs independently. Linkerd itself does not require Gateway API types to run starting in 2.19, but several Linkerd features require types such as HTTPRoute and GRPCRoute before they can be used.
+
 ## Cleanup
 
 ```bash
